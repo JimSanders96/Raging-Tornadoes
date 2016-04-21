@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(CharacterController))]
 public class InputManager : MonoBehaviour
 {
     // TODO: Get a reference to the Manus Finger data (custom class)
 
     // TODO: Get a reference to the HTC-Vive data (custom class?) 
+
+    public float movementSpeed = 5f;
+
+    [SerializeField]
+    bool useKeyboardAndMouse = true;
 
     [SerializeField]
     private GameObject[] throwablePrefabs;
@@ -19,16 +25,70 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     private float throwForce = 1000;
 
-    private Throwable throwableInHand;    
+    private Throwable throwableInHand;
+
+    private CharacterController cc;
+
+    void Start()
+    {
+        cc = GetComponent<CharacterController>();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        CheckMouseButtonPressed();
+        if (useKeyboardAndMouse)
+        {
+            CheckMouseButtonPressed();
+            CheckKeyboardInput();
+        }        
 
         // For now: Don't change the transform values. Wait for Manus and vive input.
         UpdateThrowableSpawnTransform(throwableSpawnLocation.position, throwableSpawnLocation.rotation);
+    }   
+
+    /// <summary>
+    /// Instantiate a random throwablePrefab at the throwableSpawnLocation and store a reference to its Throwable script.
+    /// </summary>
+    private void SpawnNewThrowable()
+    {
+        GameObject prefab = throwablePrefabs[Random.Range(0, throwablePrefabs.Length)];
+        if (throwableInHand == null)
+        {
+            GameObject throwable = (GameObject)Instantiate(prefab, throwableSpawnLocation.position, throwableSpawnLocation.rotation);
+            throwableInHand = throwable.GetComponent<Throwable>();
+            throwable.transform.SetParent(throwableSpawnLocation);
+        }
     }
+
+    /// <summary>
+    /// If there is a throwable available, throw it.
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <param name="force"></param>
+    private void ThrowObject(Vector3 direction, float force)
+    {
+        if (throwableInHand != null)
+        {
+            throwableInHand.Throw(direction, force);
+            throwableInHand.transform.SetParent(null);
+            throwableInHand = null;
+
+        }
+    }
+
+    /// <summary>
+    /// Update the position and rotation of the throwableSpawnLocation Transform
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="rotation"></param>
+    private void UpdateThrowableSpawnTransform(Vector3 position, Quaternion rotation)
+    {
+        throwableSpawnLocation.position = position;
+        throwableSpawnLocation.rotation = rotation;
+    }
+
+    #region Non-VR input
 
     /// <summary>
     /// For now, when the LMB is pressed, throw the throwableInHand.
@@ -49,39 +109,27 @@ public class InputManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Instantiate a random throwablePrefab at the throwableSpawnLocation and store a reference to its Throwable script.
+    /// Move depending on which key was pressed (WASD)
     /// </summary>
-    private void SpawnNewThrowable()
+    private void CheckKeyboardInput()
     {
-        GameObject prefab = throwablePrefabs[Random.Range(0, throwablePrefabs.Length)];
-        if (throwableInHand == null)
+        if(Input.GetKey(KeyCode.W))
         {
-            throwableInHand = ((GameObject)Instantiate(prefab, throwableSpawnLocation.position, throwableSpawnLocation.rotation)).GetComponent<Throwable>();
+            cc.SimpleMove(transform.forward * movementSpeed);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            cc.SimpleMove(-transform.forward * movementSpeed);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            cc.SimpleMove(-transform.right * movementSpeed);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            cc.SimpleMove(transform.right * movementSpeed);
         }
     }
 
-    /// <summary>
-    /// If there is a throwable available, throw it.
-    /// </summary>
-    /// <param name="direction"></param>
-    /// <param name="force"></param>
-    private void ThrowObject(Vector3 direction, float force)
-    {
-        if (throwableInHand != null)
-        {
-            throwableInHand.Throw(direction, force);
-            throwableInHand = null;
-        }
-    }
-
-    /// <summary>
-    /// Update the position and rotation of the throwableSpawnLocation Transform
-    /// </summary>
-    /// <param name="position"></param>
-    /// <param name="rotation"></param>
-    private void UpdateThrowableSpawnTransform(Vector3 position, Quaternion rotation)
-    {
-        throwableSpawnLocation.position = position;
-        throwableSpawnLocation.rotation = rotation;
-    }
+    #endregion
 }
