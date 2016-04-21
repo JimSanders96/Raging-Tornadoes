@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(CharacterController))]
 public class InputManager : MonoBehaviour
 {
     // TODO: Get a reference to the Manus Finger data (custom class)
@@ -11,40 +10,23 @@ public class InputManager : MonoBehaviour
     public float movementSpeed = 5f;
 
     [SerializeField]
-    bool useKeyboardAndMouse = true;
-
-    [SerializeField]
     private GameObject[] throwablePrefabs;
 
     [SerializeField]
     private Transform throwableSpawnLocation;
 
-    [SerializeField]
-    private Vector3 throwDirection = new Vector3(0, 0, 1); // Forward
-
-    [SerializeField]
+    [SerializeField] [Range(500, 20000)]
     private float throwForce = 1000;
 
     private Throwable throwableInHand;
 
-    private CharacterController cc;
-
-    void Start()
-    {
-        cc = GetComponent<CharacterController>();
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (useKeyboardAndMouse)
-        {
-            CheckMouseButtonPressed();
-            CheckKeyboardInput();
-        }        
+        CheckMouseButtonPressed();  
 
         // For now: Don't change the transform values. Wait for Manus and vive input.
-        UpdateThrowableSpawnTransform(throwableSpawnLocation.position, throwableSpawnLocation.rotation);
+        //UpdateThrowableSpawnTransform(throwableSpawnLocation.position, throwableSpawnLocation.rotation);
     }   
 
     /// <summary>
@@ -99,7 +81,7 @@ public class InputManager : MonoBehaviour
         // When LMB is pressed, throw the object.
         if (Input.GetMouseButtonDown(0))
         {
-            ThrowObject(throwDirection, throwForce);
+            ThrowObject(throwableSpawnLocation.transform.forward, throwForce);
         }
         // When RMB is pressed, spawn a throwable.
         if (Input.GetMouseButtonDown(1))
@@ -107,29 +89,5 @@ public class InputManager : MonoBehaviour
             SpawnNewThrowable();
         }
     }
-
-    /// <summary>
-    /// Move depending on which key was pressed (WASD)
-    /// </summary>
-    private void CheckKeyboardInput()
-    {
-        if(Input.GetKey(KeyCode.W))
-        {
-            cc.SimpleMove(transform.forward * movementSpeed);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            cc.SimpleMove(-transform.forward * movementSpeed);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            cc.SimpleMove(-transform.right * movementSpeed);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            cc.SimpleMove(transform.right * movementSpeed);
-        }
-    }
-
     #endregion
 }
