@@ -38,18 +38,21 @@ public class TargetBehaviour : MonoBehaviour
 
     void OnCollisionEnter(Collision objectCollision)
     {
-        GameObject collisionObject = objectCollision.gameObject;
-
-        if (!hitObjects.Contains(collisionObject))
+        if (objectCollision.gameObject.GetComponent<Throwable>() != null)
         {
-            if (myAudioSource != null)
-                myAudioSource.Play();
+            GameObject collisionObject = objectCollision.gameObject;
 
-            //Adding score to the total score;
-            ScoreManager.instance.addScore(Score);
+            if (!hitObjects.Contains(collisionObject))
+            {
+                if (myAudioSource != null)
+                    myAudioSource.Play();
+
+                //Adding score to the total score;
+                ScoreManager.instance.addScore(Score);
+            }
+
+            hitObjects.Add(collisionObject);
         }
-
-        hitObjects.Add(collisionObject);
     }
 
     /// <summary>
