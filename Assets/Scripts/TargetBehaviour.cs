@@ -10,10 +10,14 @@ public class TargetBehaviour : MonoBehaviour
         z
     }
 
+    [Range(5, 50)]
     public int Score = 10;
     public bool IsMoving = false;
     public moveAxis MoveAxis;
-    public int MoveDistance = 10;
+
+    [Range(1, 20)]
+    public float MoveDistance = 10;
+    [Range(0.1f, 10)]
     public float Speed = 2;
 
     private int direction = 1;
@@ -60,20 +64,19 @@ public class TargetBehaviour : MonoBehaviour
     /// </summary>
     private void moveTarget()
     {
-        Debug.Log((int)MoveAxis);
         switch ((int)MoveAxis)
         {
             case 0:
-                targetLocation = intitialLocation + new Vector3(MoveDistance * direction, 0, 0);
+                targetLocation = intitialLocation + transform.rotation * new Vector3(MoveDistance * direction, 0, 0);
                 break;
             case 1:
-                targetLocation = intitialLocation + new Vector3(0, MoveDistance * direction, 0);
+                targetLocation = intitialLocation + transform.rotation * new Vector3(0, MoveDistance * direction, 0);
                 break;
             case 2:
-                targetLocation = intitialLocation + new Vector3(0, 0, MoveDistance * direction);
+                targetLocation = intitialLocation + transform.rotation * new Vector3(0, 0, MoveDistance * direction);
                 break;
         }
-        transform.position = Vector3.MoveTowards(transform.position, targetLocation, ((Vector3.Distance(transform.position, targetLocation)) / Speed + Speed) * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, targetLocation, ((Vector3.Distance(transform.position, targetLocation)) * Speed + Speed) * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, targetLocation) < 0.1f)
             direction *= -1;
