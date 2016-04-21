@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InputManager : MonoBehaviour
+public class Thrower : MonoBehaviour
 {
-    // TODO: Get a reference to the Manus Finger data (custom class)
+    [SerializeField]
+    private HandMotion handMotion;
 
-    // TODO: Get a reference to the HTC-Vive data (custom class?) 
-
-    public float movementSpeed = 5f;
+    [SerializeField]
+    private ViveThrowInput viveThrowInput;
 
     [SerializeField]
     private GameObject[] throwablePrefabs;
@@ -15,19 +15,41 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     private Transform throwableSpawnLocation;
 
-    [SerializeField] [Range(500, 20000)]
+    [SerializeField]
+    private float throwSpeedThreshold = 10f;
+
+    [SerializeField]
+    [Range(500, 20000)]
     private float throwForce = 1000;
 
     private Throwable throwableInHand;
+    void Start()
+    {
+        HandMotion.OnThrowActivate += Throw;
+    }
+
+    void OnDestroy()
+    {
+        HandMotion.OnThrowActivate -= Throw;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        CheckMouseButtonPressed();  
+        CheckMouseButtonPressed();
+    }
 
-        // For now: Don't change the transform values. Wait for Manus and vive input.
-        //UpdateThrowableSpawnTransform(throwableSpawnLocation.position, throwableSpawnLocation.rotation);
-    }   
+    /// <summary>
+    /// If the player is throwing hard enough, throw the throwable.
+    /// </summary>
+    private void Throw()
+    {
+        float speed = viveThrowInput.DistanceSpeed;
+        if (speed >= throwSpeedThreshold) 
+            ThrowObject(throwForce * speed);
+    }
+
+    #region Throwing stuff
 
     /// <summary>
     /// Instantiate a random throwablePrefab at the throwableSpawnLocation and store a reference to its Throwable script.
@@ -44,31 +66,21 @@ public class InputManager : MonoBehaviour
     }
 
     /// <summary>
-    /// If there is a throwable available, throw it.
+    /// If there is a throwable available, throw it forwards relative to the throwableSpawnLocation.
     /// </summary>
     /// <param name="direction"></param>
     /// <param name="force"></param>
-    private void ThrowObject(Vector3 direction, float force)
+    private void ThrowObject(float force)
     {
         if (throwableInHand != null)
         {
-            throwableInHand.Throw(direction, force);
+            throwableInHand.Throw(throwableSpawnLocation.transform.forward, force);
             throwableInHand.transform.SetParent(null);
             throwableInHand = null;
-
         }
     }
 
-    /// <summary>
-    /// Update the position and rotation of the throwableSpawnLocation Transform
-    /// </summary>
-    /// <param name="position"></param>
-    /// <param name="rotation"></param>
-    private void UpdateThrowableSpawnTransform(Vector3 position, Quaternion rotation)
-    {
-        throwableSpawnLocation.position = position;
-        throwableSpawnLocation.rotation = rotation;
-    }
+    #endregion
 
     #region Non-VR input
 
@@ -81,7 +93,7 @@ public class InputManager : MonoBehaviour
         // When LMB is pressed, throw the object.
         if (Input.GetMouseButtonDown(0))
         {
-            ThrowObject(throwableSpawnLocation.transform.forward, throwForce);
+            ThrowObject(throwForce);
         }
         // When RMB is pressed, spawn a throwable.
         if (Input.GetMouseButtonDown(1))
