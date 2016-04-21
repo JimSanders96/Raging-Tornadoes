@@ -35,7 +35,7 @@ public class HandMotion : MonoBehaviour {
         {
             if (OnThrowActivate != null)
             {
-                OnThrowActivate();
+                OnThrowReload();
                 isReloaded = true;
             }
         }
