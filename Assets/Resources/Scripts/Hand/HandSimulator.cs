@@ -27,7 +27,7 @@ public class HandSimulator : MonoBehaviour {
     public KeyCode mRotateLeft;
     public KeyCode mRotateRight;
 
-    private Glove glove;
+    public Glove glove { get; private set; }
     private Transform gameRoot;
     private Transform modelRoot;
     private GameObject modelObject;
