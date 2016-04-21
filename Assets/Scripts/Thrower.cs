@@ -19,18 +19,20 @@ public class Thrower : MonoBehaviour
     private float throwSpeedThreshold = 10f;
 
     [SerializeField]
-    [Range(500, 20000)]
-    private float throwForce = 1000;
+    [Range(50, 1000)]
+    private float throwForce = 500;
 
     private Throwable throwableInHand;
     void Start()
     {
         HandMotion.OnThrowActivate += Throw;
+        HandMotion.OnThrowReload += SpawnNewThrowable;
     }
 
     void OnDestroy()
     {
         HandMotion.OnThrowActivate -= Throw;
+        HandMotion.OnThrowReload -= SpawnNewThrowable;
     }
 
     // Update is called once per frame
@@ -45,7 +47,7 @@ public class Thrower : MonoBehaviour
     private void Throw()
     {
         float speed = viveThrowInput.DistanceSpeed;
-        if (speed >= throwSpeedThreshold) 
+        if (speed >= throwSpeedThreshold)
             ThrowObject(throwForce * speed);
     }
 
