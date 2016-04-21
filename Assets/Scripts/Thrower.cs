@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Thrower : MonoBehaviour
 {
+    #region Fields
     [SerializeField]
     private HandMotion handMotion;
 
@@ -19,10 +20,17 @@ public class Thrower : MonoBehaviour
     private float throwSpeedThreshold = 10f;
 
     [SerializeField]
+    private GameObject shield;
+
+    [SerializeField]
     [Range(50, 1000)]
     private float throwForce = 500;
 
     private Throwable throwableInHand;
+
+    #endregion
+
+    #region Automatically executed by Unity
     void Start()
     {
         HandMotion.OnThrowActivate += Throw;
@@ -41,6 +49,14 @@ public class Thrower : MonoBehaviour
         CheckMouseButtonPressed();
     }
 
+    #endregion
+
+    #region Blocking stuff
+
+    #endregion
+
+    #region Throwing stuff
+
     /// <summary>
     /// If the player is throwing hard enough, throw the throwable.
     /// </summary>
@@ -50,8 +66,6 @@ public class Thrower : MonoBehaviour
         if (speed >= throwSpeedThreshold)
             ThrowObject(throwForce * speed);
     }
-
-    #region Throwing stuff
 
     /// <summary>
     /// Instantiate a random throwablePrefab at the throwableSpawnLocation and store a reference to its Throwable script.
