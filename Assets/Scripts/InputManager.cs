@@ -14,10 +14,10 @@ public class InputManager : MonoBehaviour
     private Transform throwableSpawnLocation;
 
     [SerializeField]
-    private Vector3 throwDirection;
+    private Vector3 throwDirection = new Vector3(0, 0, 1); // Forward
 
     [SerializeField]
-    private float throwForce;
+    private float throwForce = 1000;
 
     private Throwable throwableInHand;    
 
