@@ -14,6 +14,10 @@ public class TargetBehaviour : MonoBehaviour
     public int Score = 10;
     public bool IsMoving = false;
     public moveAxis MoveAxis;
+    public GameObject ScoreText;
+
+    [Range(1, 5)]
+    public float ScoreTime;
 
     [Range(1, 20)]
     public float MoveDistance = 10;
@@ -50,6 +54,10 @@ public class TargetBehaviour : MonoBehaviour
             {
                 if (myAudioSource != null)
                     myAudioSource.Play();
+
+                GameObject scoreTextInstance = (GameObject)Instantiate(ScoreText, transform.position, Quaternion.identity);
+                scoreTextInstance.GetComponent<scoreTextBehaviour>().SetText(Score.ToString());
+                StartCoroutine(scoreTextInstance.GetComponent<scoreTextBehaviour>().SetDeath(ScoreTime));
 
                 //Adding score to the total score;
                 ScoreManager.instance.addScore(Score);
