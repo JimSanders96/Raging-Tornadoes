@@ -10,6 +10,7 @@ public class RandomTargetActivation : MonoBehaviour {
     private float disableTargetAfterTime = 3f;
 
     private GameObject activeTarget;
+    private GameObject lastTarget;
 
     void Start()
     {
@@ -35,8 +36,19 @@ public class RandomTargetActivation : MonoBehaviour {
     {
         if(activeTarget != null)
             StartCoroutine(DisableAfterTime(activeTarget));
+<<<<<<< HEAD
         activeTarget = targetObjects[Random.Range(0, targetObjects.Length)];
         activeTarget.SetActive(true);
+=======
+
+        lastTarget = activeTarget;
+        while (targetObjects[Random.Range(0, targetObjects.Length)] == lastTarget)
+        {
+            activeTarget = targetObjects[Random.Range(0, targetObjects.Length)];
+        }
+        
+        activeTarget.SetActive(false);
+>>>>>>> origin/Development
     }
 
     private IEnumerator DisableAfterTime(GameObject go)

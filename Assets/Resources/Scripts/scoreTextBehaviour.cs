@@ -11,6 +11,7 @@ public class scoreTextBehaviour : MonoBehaviour {
     void Awake()
     {
         myTextMesh = GetComponent<TextMesh>();
+        transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position, Vector3.up);
     }
 
     void Update()
