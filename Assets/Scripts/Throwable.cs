@@ -1,14 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Collider), typeof(Rigidbody))]
-public class Throwable : MonoBehaviour {
+[RequireComponent(typeof(Collider), typeof(Rigidbody), typeof(AudioSource))]
+public class Throwable : MonoBehaviour
+{
 
     [SerializeField]
     private bool isSharp = true;
 
+    [SerializeField]
+    private AudioClip[] throwSounds;
+
     private Rigidbody myRigidbody;
     private Collider myCollider;
+
+    private AudioSource audioSource;
 
     private NoobHelper noobHelper;
 
@@ -20,6 +26,8 @@ public class Throwable : MonoBehaviour {
 
         myRigidbody = GetComponent<Rigidbody>();
         myRigidbody.useGravity = false;
+
+        audioSource = GetComponent<AudioSource>();
 
         // NoobHelper is not a required component.
         try
@@ -57,6 +65,10 @@ public class Throwable : MonoBehaviour {
         myRigidbody.AddForce(force);
         myRigidbody.useGravity = true;
         StartCoroutine("EnableCollider");
+
+        // Play a sound
+        if (throwSounds.Length > 0)
+            PlayThrowSound();
     }
 
     private IEnumerator EnableCollider()
@@ -73,5 +85,22 @@ public class Throwable : MonoBehaviour {
     {
         transform.SetParent(target);
         myRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+    }
+
+    private void PlayThrowSound()
+    {
+        audioSource.PlayOneShot(GetRandomThrowSound());
+    }
+
+    private AudioClip GetRandomThrowSound()
+    {
+        AudioClip sound = null;
+        if (throwSounds.Length > 0)
+        {
+            sound = throwSounds[Random.Range(0, throwSounds.Length)];
+
+        }
+
+        return sound;
     }
 }
