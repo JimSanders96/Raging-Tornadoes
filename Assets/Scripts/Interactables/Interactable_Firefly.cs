@@ -38,9 +38,9 @@ public class Interactable_Firefly : Interactable {
     /// </summary>
     private void FlyAround()
     {
-        float pointX = Random.Range(-maxX, maxX);
-        float pointY = Random.Range(-maxY, maxY);
-        float pointZ = Random.Range(-maxZ, maxZ);
+        float pointX = spawnPoint.x + Random.Range(-maxX, maxX);
+        float pointY = spawnPoint.y + Random.Range(-maxY, maxY);
+        float pointZ = spawnPoint.z + Random.Range(-maxZ, maxZ);
         Vector3 newPoint = new Vector3(pointX, pointY, pointZ);
         StartCoroutine(MoveToPoint(newPoint));
     }
