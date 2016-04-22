@@ -18,6 +18,8 @@ public class Thrower : MonoBehaviour
     [SerializeField]
     private Transform throwableSpawnHand;
     [SerializeField]
+    private Transform throwableSpawnLocation;
+    [SerializeField]
     private float handControllerWeight = 0.2f;
 
     [SerializeField]
@@ -79,9 +81,9 @@ public class Thrower : MonoBehaviour
         GameObject prefab = throwablePrefabs[Random.Range(0, throwablePrefabs.Length)];
         if (throwableInHand == null)
         {
-            GameObject throwable = (GameObject)Instantiate(prefab, throwableSpawnController.position, throwableSpawnController.rotation);
+            GameObject throwable = (GameObject)Instantiate(prefab, throwableSpawnLocation.position, throwableSpawnLocation.rotation);
             throwableInHand = throwable.GetComponent<Throwable>();
-            throwable.transform.SetParent(throwableSpawnController);
+            throwable.transform.SetParent(throwableSpawnLocation);
         }
     }
 
