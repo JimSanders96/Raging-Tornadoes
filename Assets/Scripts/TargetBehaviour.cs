@@ -31,11 +31,15 @@ public class TargetBehaviour : MonoBehaviour
     private AudioSource myAudioSource;
     private List<GameObject> hitObjects = new List<GameObject>();
 
+    private RandomTargetActivation rta;
+
     void Start()
     {
         myAudioSource = GetComponent<AudioSource>();
 
         intitialLocation = transform.position;
+
+        rta = GameObject.Find("GameManager").GetComponent<RandomTargetActivation>();
     }
 
     void Update()
@@ -52,19 +56,26 @@ public class TargetBehaviour : MonoBehaviour
 
             if (!hitObjects.Contains(collisionObject))
             {
-                if (myAudioSource != null)
-                    myAudioSource.Play();
-
-                GameObject scoreTextInstance = (GameObject)Instantiate(ScoreText, transform.position, Quaternion.identity);
-                scoreTextInstance.GetComponent<scoreTextBehaviour>().SetText(Score.ToString());
-                StartCoroutine(scoreTextInstance.GetComponent<scoreTextBehaviour>().SetDeath(ScoreTime));
-
-                //Adding score to the total score;
-                ScoreManager.instance.addScore(Score);
+                CountScore();
             }
 
             hitObjects.Add(collisionObject);
         }
+    }
+
+    private void CountScore()
+    {
+        if (myAudioSource != null)
+            myAudioSource.Play();
+
+        GameObject scoreTextInstance = (GameObject)Instantiate(ScoreText, transform.position, Quaternion.identity);
+        scoreTextInstance.GetComponent<scoreTextBehaviour>().SetText(Score.ToString());
+        StartCoroutine(scoreTextInstance.GetComponent<scoreTextBehaviour>().SetDeath(ScoreTime));
+
+        //Adding score to the total score;
+        ScoreManager.instance.addScore(Score);
+
+        rta.ActivateNewTarget();
     }
 
     /// <summary>
