@@ -59,4 +59,8 @@ public class NoobHelper : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * RotationSpeed);
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 07b808e3e2b8d99747359326f6d5874866a90a98
