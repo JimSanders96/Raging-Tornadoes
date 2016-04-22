@@ -47,7 +47,7 @@ public class NoobHelper : MonoBehaviour
         ///check if the location of the thrown object is smaller then the distance between the target and player
         /// </summary>
         ///
-        if(Vector3.Distance(this.transform.position, Camera.main.transform.position) < DistanceToTarget)
+        if (Vector3.Distance(this.transform.position, Camera.main.transform.position) < DistanceToTarget)
         {
             //find the vector pointing from our position to the target
             _direction = (Target.position - transform.position).normalized;
@@ -59,8 +59,4 @@ public class NoobHelper : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * RotationSpeed);
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 07b808e3e2b8d99747359326f6d5874866a90a98
