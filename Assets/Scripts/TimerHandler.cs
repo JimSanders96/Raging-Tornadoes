@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Timer : MonoBehaviour {
+public class TimerHandler : MonoBehaviour {
 
     public bool TimeUp { get; private set; }
     public float TimerValue { get; set; }
