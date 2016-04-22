@@ -10,6 +10,8 @@ public class Throwable : MonoBehaviour {
     private Rigidbody myRigidbody;
     private Collider myCollider;
 
+    private NoobHelper noobHelper;
+
     void Start()
     {
         // Disable collider to prevent colliding with your own hand.
@@ -18,6 +20,16 @@ public class Throwable : MonoBehaviour {
 
         myRigidbody = GetComponent<Rigidbody>();
         myRigidbody.useGravity = false;
+
+        // NoobHelper is not a required component.
+        try
+        {
+            noobHelper = GetComponent<NoobHelper>();
+        }
+        catch
+        {
+
+        }
     }
 
     /// <summary>
@@ -37,6 +49,10 @@ public class Throwable : MonoBehaviour {
     /// <param name="speed"></param>
     public void Throw(Vector3 direction, float speed)
     {
+        // Activate aim assist
+        if (noobHelper != null)
+            noobHelper.RayCast();
+
         Vector3 force = direction * speed;
         myRigidbody.AddForce(force);
         myRigidbody.useGravity = true;
