@@ -35,20 +35,25 @@ public class RandomTargetActivation : MonoBehaviour {
     public void ActivateNewTarget()
     {
         if(activeTarget != null)
-            StartCoroutine(DisableAfterTime(activeTarget));
-<<<<<<< HEAD
-        activeTarget = targetObjects[Random.Range(0, targetObjects.Length)];
-        activeTarget.SetActive(true);
-=======
-
-        lastTarget = activeTarget;
-        while (targetObjects[Random.Range(0, targetObjects.Length)] == lastTarget)
         {
+            // Deactivate active target and activate a random new one.
+            StartCoroutine(DisableAfterTime(activeTarget));
+            lastTarget = activeTarget;
+
             activeTarget = targetObjects[Random.Range(0, targetObjects.Length)];
+
+            while (activeTarget == lastTarget)
+            {
+                activeTarget = targetObjects[Random.Range(0, targetObjects.Length)];
+            }
         }
+        else
+        {
+            // Only get a new target.
+            activeTarget = targetObjects[Random.Range(0, targetObjects.Length)];
+        }                    
         
-        activeTarget.SetActive(false);
->>>>>>> origin/Development
+        activeTarget.SetActive(true);
     }
 
     private IEnumerator DisableAfterTime(GameObject go)
