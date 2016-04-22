@@ -1,31 +1,37 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class TimerHandler : MonoBehaviour {
 
     public bool TimeUp { get; private set; }
-    public float TimerValue { get; set; }
+    public float MaxTime;
     private float CurrentTime;
 
-	// Use this for initialization
-	void Start ()
+    /// <summary>
+    /// TextField for showing Timer
+    /// </summary>
+    public Text TimerText;
+	
+    void Start ()
     {
-	
-	}
-	
+        StartTimer();
+    }
+
 	// Update is called once per frame
 	void Update ()
     {
         if (TimeUp == false)
         {
             RunTimer();
+            TimerText.text = CurrentTime.ToString();
         }
 	}
 
     void StartTimer()
     {
         TimeUp = false;
-        CurrentTime = TimerValue;
+        CurrentTime = MaxTime + 3;
     }
 
     void RunTimer()
