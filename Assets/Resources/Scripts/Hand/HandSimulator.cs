@@ -101,12 +101,12 @@ public class HandSimulator : MonoBehaviour {
     {
         if (Input.GetKeyDown(mRotateLeft))
         {
-            handYawOffset[(int)hand] -= 45;
+            handYawOffset[(int)hand] -= 5;
         }
 
-        if (Input.GetKeyUp(mRotateRight))
+        if (Input.GetKeyDown(mRotateRight))
         {
-            handYawOffset[(int)hand] += 45;
+            handYawOffset[(int)hand] += 5;
         }
     }
 }

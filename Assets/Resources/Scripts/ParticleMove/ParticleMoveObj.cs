@@ -52,20 +52,20 @@ public class ParticleMoveObj : MonoBehaviour {
         mLastPos = transform.position;
 
         // Adjust volume and pitch based on velocity.
-        if (mWindRushAudio != null)
-        {
-            mSoundVel = Mathf.Lerp(mSoundVel, mDelta.magnitude, mSoundLerp * Time.deltaTime);
-            if (mSoundVel < mSoundMinVelocity && mWindRushAudio.isPlaying)
-            {
-                mWindRushAudio.Pause();
-            }
-            else if (mSoundVel > mSoundMinVelocity)
-            {
-                if (!mWindRushAudio.isPlaying) mWindRushAudio.Play();
-                float tUseSound = mSoundVel - mSoundMinVelocity;
-                mWindRushAudio.volume = Mathf.Min(tUseSound * mWindSoundVolMult, mWindSoundVolMax);
-                mWindRushAudio.pitch = Mathf.Min(tUseSound * mWindSoundPitchMult, mWindSoundPitchMax);
-            }
-        }
+        //if (mWindRushAudio != null)
+        //{
+        //    mSoundVel = Mathf.Lerp(mSoundVel, mDelta.magnitude, mSoundLerp * Time.deltaTime);
+        //    if (mSoundVel < mSoundMinVelocity && mWindRushAudio.isPlaying)
+        //    {
+        //        mWindRushAudio.Pause();
+        //    }
+        //    else if (mSoundVel > mSoundMinVelocity)
+        //    {
+        //        if (!mWindRushAudio.isPlaying) mWindRushAudio.Play();
+        //        float tUseSound = mSoundVel - mSoundMinVelocity;
+        //        mWindRushAudio.volume = Mathf.Min(tUseSound * mWindSoundVolMult, mWindSoundVolMax);
+        //        mWindRushAudio.pitch = Mathf.Min(tUseSound * mWindSoundPitchMult, mWindSoundPitchMax);
+        //    }
+        //}
     }
 }
