@@ -21,11 +21,7 @@ public class NoobHelper : MonoBehaviour
     {
         Transform camera = Camera.main.transform;
         RaycastHit hit;
-<<<<<<< HEAD
         if (Physics.Raycast(camera.position, camera.forward, out hit, 1000))
-=======
-        if (Physics.Raycast(camera.position, camera.forward, out hit, 100))
->>>>>>> origin/Development
         {
             if (hit.transform.tag == "Target")
             {

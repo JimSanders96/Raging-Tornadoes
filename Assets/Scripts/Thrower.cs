@@ -81,11 +81,7 @@ public class Thrower : MonoBehaviour
         {
             GameObject throwable = (GameObject)Instantiate(prefab, throwableSpawnController.position, throwableSpawnController.rotation);
             throwableInHand = throwable.GetComponent<Throwable>();
-<<<<<<< HEAD
             throwable.transform.SetParent(throwableSpawnController);
-=======
-            throwable.transform.SetParent(throwableSpawnLocation);            
->>>>>>> origin/Development
         }
     }
 
