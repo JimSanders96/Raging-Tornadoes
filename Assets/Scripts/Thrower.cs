@@ -28,6 +28,8 @@ public class Thrower : MonoBehaviour
 
     private Throwable throwableInHand;
 
+    private NoobHelper noobHelper;
+
     #endregion
 
     #region Automatically executed by Unity
@@ -78,6 +80,7 @@ public class Thrower : MonoBehaviour
             GameObject throwable = (GameObject)Instantiate(prefab, throwableSpawnLocation.position, throwableSpawnLocation.rotation);
             throwableInHand = throwable.GetComponent<Throwable>();
             throwable.transform.SetParent(throwableSpawnLocation);
+            noobHelper = throwable.GetComponent<NoobHelper>();
         }
     }
 
