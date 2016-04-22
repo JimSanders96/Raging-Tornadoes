@@ -35,7 +35,12 @@ public class RandomTargetActivation : MonoBehaviour {
     public void ActivateNewTarget()
     {
         if(activeTarget != null)
+<<<<<<< HEAD
             activeTarget.SetActive(false);
+=======
+            StartCoroutine(DisableAfterTime(activeTarget));
+
+>>>>>>> origin/Development
         activeTarget = targetObjects[Random.Range(0, targetObjects.Length)];
         activeTarget.SetActive(true);
     }
