@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NoobHelper : MonoBehaviour {
+public class NoobHelper : MonoBehaviour
+{
 
     //values that will be set in the Inspector
     public Transform Target;
@@ -9,11 +10,11 @@ public class NoobHelper : MonoBehaviour {
 
     void RayCasting()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Transform camera = Camera.main.transform;
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100))
+        if (Physics.Raycast(camera.position, camera.forward, out hit, 1000))
         {
-            if(hit.transform.tag == "Target")
+            if (hit.transform.tag == "Target")
             {
                 Target = hit.transform;
             }
@@ -37,3 +38,4 @@ public class NoobHelper : MonoBehaviour {
         //rotate us over time according to speed until we are in the required rotation
         transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * RotationSpeed);
     }
+}
