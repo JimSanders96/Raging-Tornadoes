@@ -3,7 +3,7 @@ using System.Collections;
 
 public class scoreTextBehaviour : MonoBehaviour {
 
-    [Range(0, 5)]
+    [Range(0, 50)]
     public float Speed;
 
     private TextMesh myTextMesh;
