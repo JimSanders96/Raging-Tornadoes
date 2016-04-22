@@ -24,7 +24,7 @@ public class TimerHandler : MonoBehaviour {
         if (TimeUp == false)
         {
             RunTimer();
-            TimerText.text = CurrentTime.ToString();
+            TimerText.text = Mathf.Round(CurrentTime).ToString();
         }
 	}
 
