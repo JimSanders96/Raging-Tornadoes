@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-[RequireComponent(typeof(AudioSource), typeof(Collider), typeof(Animator))]
+[RequireComponent(typeof(AudioSource), typeof(Collider))]
 public class Interactable : MonoBehaviour
 {
 
@@ -14,14 +14,12 @@ public class Interactable : MonoBehaviour
 
     protected delegate void ColissionEvent();
     protected ColissionEvent onColission;
-    protected Animator animator;
 
     // Use this for initialization
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         myCollider = (Collider)GetComponent(typeof(Collider));
-        animator = GetComponent<Animator>();
     }
 
     /// <summary>
@@ -35,11 +33,12 @@ public class Interactable : MonoBehaviour
 
         if (onColission != null)
             onColission();
-    }       
+    }
 
     private void PlayInteractSound()
     {
-        audioSource.PlayOneShot(interactSound);
-    }       
+        if (interactSound != null)
+            audioSource.PlayOneShot(interactSound);
+    }
 
 }
