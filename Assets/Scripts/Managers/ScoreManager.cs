@@ -20,6 +20,6 @@ public class ScoreManager : MonoBehaviour {
 	public void addScore(int points)
     {
         totalScore += points;
-        scoreText.text = totalScore.ToString();
+        //scoreText.text = totalScore.ToString();
     }
 }

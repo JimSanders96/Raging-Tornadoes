@@ -1,15 +1,32 @@
 fileFormatVersion: 2
-guid: 1f361a7344a3f8e49ae562fef5256347
-timeCreated: 1461266781
+guid: 7bb52ec6d8abb224ab2d78ea3638a0fb
+timeCreated: 1461318209
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: pCylinder1
+    100000: katana_1
+    100002: katana_2
+    100004: katana_3
+    100006: //RootNode
+    100008: rack
+    400000: katana_1
+    400002: katana_2
+    400004: katana_3
+    400006: //RootNode
+    400008: rack
+    2300000: katana_1
+    2300002: katana_2
+    2300004: katana_3
+    2300006: rack
+    3300000: katana_1
+    3300002: katana_2
+    3300004: katana_3
+    3300006: rack
+    4300000: katana_2
+    4300002: katana_1
+    4300004: katana_3
+    4300006: rack
     9500000: //RootNode
   materials:
     importMaterials: 1

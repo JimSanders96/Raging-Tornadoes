@@ -21,7 +21,11 @@ public class RandomTargetActivation : MonoBehaviour {
         if (targetObjects.Length > 1)
         {
             // Disable all targets
-            foreach (GameObject target in targetObjects) target.SetActive(false);
+            foreach (GameObject target in targetObjects)
+            {
+                target.SetActive(false);
+            }
+
 
             // Enable 1 random target
             ActivateNewTarget();
@@ -30,9 +34,10 @@ public class RandomTargetActivation : MonoBehaviour {
 
     public void ActivateNewTarget()
     {
-        activeTarget.SetActive(false);
+        if(activeTarget != null)
+            activeTarget.SetActive(false);
         activeTarget = targetObjects[Random.Range(0, targetObjects.Length)];
-        activeTarget.SetActive(false);
+        activeTarget.SetActive(true);
     }
 
     private IEnumerator DisableAfterTime(GameObject go)
