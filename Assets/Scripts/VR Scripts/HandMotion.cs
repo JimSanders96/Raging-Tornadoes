@@ -31,7 +31,6 @@ public class HandMotion : MonoBehaviour
     [Range(45f, 90f)]
     private float blockWristXAxisThreshold = 0.8f;
 
-    private bool isCheckingJitter = false;
     private bool isThrown = false;
     private bool isReloaded = false;
     private bool isHandUp = false;
